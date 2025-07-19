@@ -7,7 +7,7 @@ const transition = {
   type: "spring",
   stiffness: 60,
   damping: 20,
-  mass: 1.2,
+  mass: 1.3,
 };
 
 function PuzzlePanel({ level, onMatch }) {
