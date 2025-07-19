@@ -1,0 +1,133 @@
+/* --------------------------------------------------
+   Color & sizing tokens
+-------------------------------------------------- */
+:root {
+  /* Backgrounds */
+  --bg-color: #fbbdc0; /* main pastel pink            */
+  --solution-bg: #f8aeb3; /* slightly deeper for left    */
+
+  /* Shape styling */
+  --shape-color: #ffffff;
+  --shadow-color: rgba(192, 96, 96, 0.3);
+}
+
+/* --------------------------------------------------
+   Global layout reset
+-------------------------------------------------- */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  background: var(--bg-color);
+}
+
+/* --------------------------------------------------
+   App & panel layout
+-------------------------------------------------- */
+.app {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.puzzle-panel {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  position: relative; /* so the toast can overlay */
+}
+
+.panel-column {
+  width: 50vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.panel-column.solution {
+  background: var(--solution-bg);
+}
+.panel-column.interactive {
+  background: var(--bg-color);
+}
+
+/* --------------------------------------------------
+   2 × 2 grid that fills each panel
+-------------------------------------------------- */
+.shape-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* two equal columns  */
+  grid-template-rows: 1fr 1fr; /* two equal rows     */
+  width: 100%;
+  height: 100%;
+  gap: 3vmin; /* nice breathing room */
+  padding: 3vmin; /* keeps shapes away from edges */
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------
+   Tiles and shape “inner” element
+-------------------------------------------------- */
+.shape-tile {
+  /* fills grid-cell entirely */
+  width: 100%;
+  height: 100%;
+
+  /* centers inner shape */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* The visible shape */
+.shape-inner {
+  aspect-ratio: 1 / 1; /* ALWAYS a square   */
+  width: 70%; /* % of tile; adapt as desired */
+  background: var(--shape-color);
+  box-shadow: 10px 10px 0 var(--shadow-color);
+  transition: border-radius 0.3s ease, clip-path 0.3s ease, transform 0.25s ease;
+}
+
+/* Tap animation (optional) */
+.shape-tile:active .shape-inner {
+  transform: scale(0.93);
+}
+
+/* --------------------------------------------------
+   Shape variants
+-------------------------------------------------- */
+.shape-inner.square {
+  border-radius: 8px;
+}
+
+.shape-inner.circle {
+  border-radius: 50%;
+}
+
+/* Capsule/pill (width ≈ height for now; tweak ratio if you’d like) */
+.shape-inner.pill {
+  border-radius: 100px / 60px;
+}
+
+/* CSS triangle built from borders */
+.shape-inner.triangle {
+  width: 0;
+  height: 0;
+  background: transparent;
+  box-shadow: none; /* remove previous shadow */
+
+  border-left: 35% solid transparent;
+  border-right: 35% solid transparent;
+  border-bottom: 60% solid var(--shape-color);
+
+  /* add shadow manually */
+  filter: drop-shadow(10px 10px 0 var(--shadow-color));
+}
